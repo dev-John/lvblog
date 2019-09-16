@@ -7,6 +7,13 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## Tutorial de ambientação
+
+- Instalar PHP ou Wamp (Já vem com PHP)
+- Instalar Composer (https://getcomposer.org/download/)
+- Criar projeto Laravel (composer create-project laravel/laravel myapp) (Criar o projeto dentro da pasta www do WAMP)
+- Dentro da pasta do projeto, no cmd digite: php artisan serve (carrega o projeto em http://127.0.0.1:8000).
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
@@ -20,13 +27,4 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Tutorial de ambientação
-
-1 - Instalar PHP ou Wamp (Já vem com PHP)
-2 - Instalar Composer (https://getcomposer.org/download/)
-3 - Criar projeto Laravel (composer create-project laravel/laravel myapp) (Criar o projeto dentro da pasta www do WAMP)
-4 - Dentro da pasta do projeto, no cmd digite: php artisan serve (carrega o projeto em http://127.0.0.1:8000).
-
-
 
