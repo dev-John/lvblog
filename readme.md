@@ -14,6 +14,18 @@
 - Criar projeto Laravel (composer create-project laravel/laravel myapp) (Criar o projeto dentro da pasta www do WAMP)
 - Dentro da pasta do projeto, no cmd digite: php artisan serve (carrega o projeto em http://127.0.0.1:8000).
 
+Obs:
+ - APÓS clonar a versão do git:
+
+ - executar: composer install
+ - criar um arquivo .env (o arquivo não sobe no git)
+ - executar os comandos: 
+ - php artisan key:generate
+ - php artisan cache:clear 
+ - php artisan config:clear
+
+ - executar php artisan serve
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
