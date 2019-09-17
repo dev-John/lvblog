@@ -31,3 +31,7 @@ Route::get('/services', 'PagesController@services');
 // Route::get('/hello', function () {
 //     return '<h1>Hello World</h1>';
 // });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
