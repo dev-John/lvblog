@@ -23,6 +23,8 @@ Obs:
  - php artisan key:generate
  - php artisan cache:clear 
  - php artisan config:clear
+ - php artisan migrate
+ - php artisan route:list
 
  - executar php artisan serve
 
