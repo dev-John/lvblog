@@ -14,8 +14,10 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="/services" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="/posts/create" class="nav-link">Publicar</a></li>
+                {{-- <li class="nav-item"><a href="/about" class="nav-link">About</a></li> --}}
+                {{-- <li class="nav-item"><a href="/services" class="nav-link">Services</a></li> --}}
+                {{-- <li class="nav-item"><a href="/posts" class="nav-link">Blog</a></li> --}}
             </ul>
 
             <!-- Right Side Of Navbar -->
