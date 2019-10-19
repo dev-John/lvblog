@@ -10,6 +10,12 @@
                     </div>
                     <div class="col-md-8 col-sm-8">
                         <h3><a href="/posts/{{$post->id}}">{{$post->title}}</a></h3>
+
+                        <p>
+                            {{ substr(strip_tags($post->body),0,50) }}
+                            {{ strlen(strip_tags($post->body)) > 50 ? "..." : "" }}
+                        </p>
+                        
                         <small>Escrito em {{$post->created_at}}</small>
                     </div>
                 </div>                
