@@ -12,6 +12,15 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <!-- TinyMCE Editor -->
+    
+    <script src="https://cdn.tiny.cloud/1/rbtj26zk6ovadqm9r3bqllan8i90zb9nq78e632td2digt61/tinymce/5/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#article-editor'
+        });
+    </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
