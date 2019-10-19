@@ -8,10 +8,16 @@
     </div>
     <hr><small>Escrito em {{$post->created_at}}</small>
     <hr>
-    <a href="/posts/{{$post->id}}/edit" class="btn btn-default">Editar</a>
+    <div class="row ml-2">
+        <div class="col-xs-4">
+            <a href="/posts/{{$post->id}}/edit" class="btn btn-outline-primary">Editar</a>
+        </div>
+        <div class="col-xs-4">
 
-    {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
-        {{Form::hidden('_method', 'DELETE')}}
-        {{Form::submit('Excluir', ['class' => 'btn btn-danger'])}}
-    {!!Form::close()!!}
+            {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                {{Form::hidden('_method', 'DELETE')}}
+                {{Form::submit('Excluir', ['class' => 'btn btn-outline-danger ml-2'])}}
+            {!!Form::close()!!}
+        </div>
+    </div>
 @endsection
