@@ -14,8 +14,8 @@
         <div class="form-group">
             {{Form::file('cover_image')}}
         </div>
-        
-        {{Form::hidden('_method','PUT')}}        
-        {{Form::submit('submit', ['class'=>'btn btn-primary'])}}
+
+        {{Form::hidden('_method','PUT')}}
+        {{Form::submit('Confirmar', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
 @endsection
