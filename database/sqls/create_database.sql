@@ -7,6 +7,9 @@ select * from posts;
 select * from comments;
 select * from users;
 
+SET SQL_SAFE_UPDATES = 0;
+delete from posts where id in(13,19,14,18);
+delete from comments;
 drop table comments;
 
 insert into comments

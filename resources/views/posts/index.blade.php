@@ -12,8 +12,8 @@
                         <h3><a href="/posts/{{$post->id}}">{{$post->title}}</a></h3>
 
                         <p>
-                            {{ substr(strip_tags($post->body),0,50) }}
-                            {{ strlen(strip_tags($post->body)) > 50 ? "..." : "" }}
+                            {{ substr(strip_tags($post->body),0,250) }}
+                            {{ strlen(strip_tags($post->body)) > 250 ? "..." : "" }}
                         </p>
                         
                         <small>Escrito em {{$post->created_at}} por {{$post->user->name}}</small>
