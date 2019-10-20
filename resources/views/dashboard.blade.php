@@ -6,7 +6,11 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Suas publicações!
-                    <a class="btn btn-primary btn-sm" href="/posts/create" role="button">Publicar</a>
+                    @if(!Auth::guest())
+                        @if(Auth::user()->is_admin)
+                            <a class="btn btn-primary btn-sm" href="/posts/create" role="button">Publicar</a>
+                        @endif
+                    @endif
                 </div>
 
                 <div class="card-body">

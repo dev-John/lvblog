@@ -14,7 +14,11 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="/posts/create" class="nav-link">Publicar</a></li>
+                @if(!Auth::guest())
+                    @if(Auth::user()->is_admin)
+                        <li class="nav-item"><a href="/posts/create" class="nav-link">Publicar</a></li>
+                    @endif
+                @endif
                 {{-- <li class="nav-item"><a href="/about" class="nav-link">About</a></li> --}}
                 {{-- <li class="nav-item"><a href="/services" class="nav-link">Services</a></li> --}}
                 {{-- <li class="nav-item"><a href="/posts" class="nav-link">Blog</a></li> --}}
@@ -43,9 +47,13 @@
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-                        <a class="dropdown-item" href="/posts/create">
-                            {{ __('Publicar') }}
-                        </a>
+                        @if(!Auth::guest())
+                            @if(Auth::user()->is_admin)
+                                <a class="dropdown-item" href="/posts/create">
+                                    {{ __('Publicar') }}
+                                </a>
+                            @endif
+                        @endif
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

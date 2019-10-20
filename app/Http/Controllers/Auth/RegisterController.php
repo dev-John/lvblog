@@ -63,11 +63,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $isAdmin = 0;
+        $isAdmin = 0;        
 
-        if ($data['is_admin'] == 'on') {
+        if (isset($data['is_admin'])) {
             $isAdmin = 1;
         }
+
+        // if ($data['is_admin'] == 'on') {
+        //     $isAdmin = 1;
+        // }
 
         return User::create([
             'name' => $data['name'],

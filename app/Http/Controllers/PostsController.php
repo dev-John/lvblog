@@ -53,6 +53,9 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        if(auth()->user()->is_admin === 0){
+            return redirect('/posts')->with('error', 'Seu usuário não possui permissão para publicar!');
+        }
 
         $rules = [
             'body' => 'required|max:500',
@@ -136,6 +139,10 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(auth()->user()->is_admin === 0){
+            return redirect('/posts')->with('error', 'Seu usuário não possui permissão para editar!');
+        }
+
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required'
