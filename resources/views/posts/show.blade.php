@@ -8,18 +8,48 @@
     <div>
         {!!$post->body!!}
     </div>
-    <hr><small>Escrito em {{$post->created_at}}</small>
     <hr>
-    <div class="row ml-2">
-        <div class="col-xs-4">
-            <a href="/posts/{{$post->id}}/edit" class="btn btn-outline-primary">Editar</a>
-        </div>
-        <div class="col-xs-4">
+        <div class="row ml-2">
+            <div class="col-xs-2"><small>Escrito em {{$post->created_at}} por {{$post->user->name}}</small></div>
+            @if(!Auth::guest())
+                @if(Auth::user()->id == $post->user_id)
+                    <div class="col-xs-4 ml-3">
+                        <a href="/posts/{{$post->id}}/edit" class="btn btn-outline-primary">Editar</a>
+                    </div>
+                    <div class="col-xs-4">
 
-            {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
-                {{Form::hidden('_method', 'DELETE')}}
-                {{Form::submit('Excluir', ['class' => 'btn btn-outline-danger ml-2'])}}
-            {!!Form::close()!!}
+                        {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Excluir', ['class' => 'btn btn-outline-danger ml-2'])}}
+                        {!!Form::close()!!}
+                    </div>
+                @endif
+            @endif
+        </div>
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            @foreach($post->comment as $com)
+                <div class="">
+                    <p class="mt-2">{{$com->body}}</p>
+                    <div class="mb-4"><small>Escrito em {{$com->created_at}} por {{$post->user->name}}</small></div>
+                </div>
+            @endforeach
         </div>
     </div>
+
+    {!! Form::open(['action' => ['CommentsController@store'], 'method' => 'POST']) !!}         
+        {{Form::label('Comentar Publicação')}}
+        <div class="row">
+            <div class="col-md-10 col-sm-10">
+                {{Form::text('comment', "", ['class' => 'form-control', 'placeholder' => 'Comente aqui...'])}}
+            </div>
+            <div class="col-md-2 col-sm-2">
+                {{Form::submit('Comentar', ['class'=>'btn btn-primary'])}}
+            </div>
+            {{Form::text('id', $post->id, ['class' => 'd-none'])}}            
+        </div>
+        <br><br>
+    {!! Form::close() !!}
 @endsection

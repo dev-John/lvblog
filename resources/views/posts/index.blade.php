@@ -16,7 +16,7 @@
                             {{ strlen(strip_tags($post->body)) > 50 ? "..." : "" }}
                         </p>
                         
-                        <small>Escrito em {{$post->created_at}}</small>
+                        <small>Escrito em {{$post->created_at}} por {{$post->user->name}}</small>
                     </div>
                 </div>                
             </div>

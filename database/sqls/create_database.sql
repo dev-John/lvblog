@@ -4,6 +4,25 @@ use lvblog;
 
 
 select * from posts;
+select * from comments;
+select * from users;
+
+drop table comments;
+
+insert into comments
+(
+	id,
+    body,
+    created_at,
+    updated_at
+)
+values
+(
+	13,
+    'Teste',
+    now(),
+    now()
+);
 
 insert into posts 
 (

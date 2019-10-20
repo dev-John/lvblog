@@ -5,10 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
+use App\Comment;
 use DB;
 
 class PostsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +31,7 @@ class PostsController extends Controller
         //$posts = Post::all();
         // $posts = Post::orderBy('title', 'desc')->get();
 
-        $posts = Post::orderBy('created_at', 'desc')->paginate(3);     
+        $posts = Post::orderBy('created_at', 'desc')->paginate(3);        
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -70,6 +80,7 @@ class PostsController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
         $post->cover_image = $fileNameToStore;
         $post->save();
 
@@ -85,7 +96,10 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        return view('posts.show')->with('post', $post);
+        $comments = Comment::find($id);
+
+        return view('posts.show', array('post' => $post, 'comments' => $comments));
+        // return view('posts.show')->with('post', $post);
     }
 
     /**
@@ -97,6 +111,12 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+
+        // verificar se o usuário é o dono da publicação
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('error', 'Usuário sem permissão!');
+        }
+
         return view('posts.edit')->with('post', $post);
     }
 
@@ -131,6 +151,12 @@ class PostsController extends Controller
         // Criar a publicação
 
         $post = Post::find($id);
+
+        // verificar se o usuário é o dono da publicação
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('error', 'Usuário sem permissão!');
+        }
+
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         if($request->hasFile('cover_image')){
@@ -151,6 +177,11 @@ class PostsController extends Controller
     {
 
         $post = Post::find($id);
+
+        // verificar se o usuário é o dono da publicação
+        if(auth()->user()->id !== $post->user_id){
+            return redirect('/posts')->with('error', 'Este usuário não é o dono da publicação');
+        }        
 
         if($post->cover_image != 'noimage.jpg'){
             //deleta a imagem
