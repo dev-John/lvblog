@@ -58,17 +58,19 @@
         </div>
     @endif
 
-    {!! Form::open(['action' => ['CommentsController@store'], 'method' => 'POST']) !!}         
-        {{Form::label('Comentar Publicação')}}
-        <div class="row">
-            <div class="col-md-10 col-sm-10">
-                {{Form::text('comment', "", ['class' => 'form-control', 'placeholder' => 'Comente aqui...'])}}
+    @if(!Auth::guest())
+        {!! Form::open(['action' => ['CommentsController@store'], 'method' => 'POST']) !!}         
+            {{Form::label('Comentar Publicação')}}
+            <div class="row">
+                <div class="col-md-10 col-sm-10">
+                    {{Form::text('comment', "", ['class' => 'form-control', 'placeholder' => 'Comente aqui...'])}}
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    {{Form::submit('Comentar', ['class'=>'btn btn-primary'])}}
+                </div>
+                {{Form::text('id', $post->id, ['class' => 'd-none'])}}            
             </div>
-            <div class="col-md-2 col-sm-2">
-                {{Form::submit('Comentar', ['class'=>'btn btn-primary'])}}
-            </div>
-            {{Form::text('id', $post->id, ['class' => 'd-none'])}}            
-        </div>
-        <br><br>
-    {!! Form::close() !!}
+            <br><br>
+        {!! Form::close() !!}
+    @endif
 @endsection
