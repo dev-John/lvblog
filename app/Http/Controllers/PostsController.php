@@ -53,11 +53,19 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+
+        $rules = [
+            'body' => 'required|max:500',
             'cover_image' => 'image|nullable|max:1999' //valida que deve ser img (png, jpeg, gif...), n é obrigatorio e tamanho maxx 1,99 mb
-        ]);
+        ];
+
+        $customMessage = [
+            'required' => 'O conteúdo não pode ser vazio!',
+            'body.max' => 'A publicação deve ter até 500 caracteres!',
+            'cover_image.max' => 'A imagem deve ter até 1,99 mb'
+        ];
+
+        $this->validate($request, $rules, $customMessage);
 
         //trata o envio do arquivo
         if($request->hasFile('cover_image')){
@@ -96,10 +104,9 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        $comments = Comment::find($id);
+        $comments = Comment::orderBy('created_at', 'desc')->paginate(3);
 
         return view('posts.show', array('post' => $post, 'comments' => $comments));
-        // return view('posts.show')->with('post', $post);
     }
 
     /**

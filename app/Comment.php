@@ -9,7 +9,7 @@ class Comment extends Model
     // Nome da tabela
     protected $table = 'comments';
 
-    public $primaryKey = 'post_id';
+    public $primaryKey = 'comment_id';
 
     // Timestamps
     public $timestamps = true;

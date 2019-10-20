@@ -25,7 +25,7 @@
                             </tr>
                             @foreach($posts as $post)
                                 <tr>
-                                    <td>{{$post->title}}</td>
+                                    <td><a href="/posts/{{$post->id}}">{{$post->title}}</a></td>
                                     <td><a href="/posts/{{$post->id}}/edit" class="btn btn-default">Editar</a></td>
                                     <td>
                                         {!!Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'pull-right'])!!}

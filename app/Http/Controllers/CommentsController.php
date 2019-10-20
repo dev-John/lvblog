@@ -41,16 +41,22 @@ class CommentsController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, [
-            'comment' => 'required',
-            'id' => 'required'
-        ]);
+        $rules = [
+            'comment' => 'required|max:128'
+        ];
 
+        $customMessage = [
+            'required' => 'O comentário não pode ser vazio!',
+            'comment.max' => 'O comentário deve ter até 128 caracteres!'
+        ];
+
+        $this->validate($request, $rules, $customMessage);
 
         $user_id = auth()->user()->id;
+        $id = (int)$request->input('id');
 
         $comment = new Comment;
-        $comment->post_id = (int)$request->input('id');
+        $comment->post_id = $id;
         $comment->body = $request->input('comment');
         $comment->user_id = $user_id;
         
@@ -58,7 +64,7 @@ class CommentsController extends Controller
 
         $comment->save();
 
-        return redirect('/posts')->with('success', 'Comentário Realizado com Sucesso!');
+        return redirect()->route('posts.show',[$id]);
     }
 
     /**
@@ -78,9 +84,16 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($comment_id)
     {
-        //
+        $comment = Comment::find((int)$comment_id);
+
+        // verificar se o usuário é o dono da publicação
+        if(auth()->user()->id !== $comment->user_id){
+            return redirect('/posts')->with('error', 'Usuário sem permissão!');
+        }
+
+        return view('comments.edit')->with('comment', $comment);
     }
 
     /**
@@ -92,7 +105,37 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $rules = [
+            'body' => 'required|max:128'
+        ];
+
+        $customMessage = [
+            'required' => 'O comentário não pode ser vazio!',
+            'body.max' => 'O comentário deve ter até 128 caracteres!'
+        ];
+
+        $this->validate($request, $rules, $customMessage);
+
+        // Encontra o comentário
+
+        $comment = Comment::find($id);
+
+        // verificar se o usuário é o dono da publicação
+        if(auth()->user()->id !== $comment->user_id){
+            return redirect('/posts')->with('error', 'Usuário sem permissão!');
+        }
+
+        // Encontra o post
+
+        $post = Post::find($comment->post_id);
+
+        $comment->body = $request->input('body');
+        $comment->save();
+
+        $comments = Comment::orderBy('created_at', 'desc')->paginate(3);
+
+        return view('posts.show', array('post' => $post, 'comments' => $comments))->with('success', 'Comentário Atualizado com Sucesso!');;
     }
 
     /**
@@ -103,6 +146,20 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::find($id);
+
+
+        // verificar se o usuário é o dono da publicação
+        if(auth()->user()->id !== $comment->user_id){
+            return redirect('/posts')->with('error', 'Este usuário não é o dono da publicação');
+        }        
+
+        $comment->delete();
+        $post = Post::find($comment->post_id);
+        $comments = Comment::orderBy('created_at', 'desc')->paginate(3);
+
+        return view('posts.show', array('post' => $post, 'comments' => $comments))->with('success', 'Comentário Excluído com Sucesso!');;
+
+        // return redirect('/posts')->with('success', 'Publicação Excluída com Sucesso!');
     }
 }
