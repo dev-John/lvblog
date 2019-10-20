@@ -25,6 +25,7 @@ Obs:
  - php artisan config:clear
  - php artisan migrate
  - php artisan route:list
+ - php artisan storage:link
 
  - executar php artisan serve
 

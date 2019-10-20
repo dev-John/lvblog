@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
+//     error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+// }
 
 
 Route::get('/', 'PostsController@index');
@@ -18,7 +20,11 @@ Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
 Route::resource('posts', 'PostsController');
+Route::resource('comments', 'CommentsController');
 
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@index');
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -33,6 +39,4 @@ Route::resource('posts', 'PostsController');
 //     return '<h1>Hello World</h1>';
 // });
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
